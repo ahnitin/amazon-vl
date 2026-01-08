@@ -280,8 +280,4 @@ git push origin feature/nova-feature
 
 MIT License - veja [LICENSE](LICENSE)
 
----
 
-<p align="center">
-  <sub>Built with ☕ for SREs</sub>
-</p>
